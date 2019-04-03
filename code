@@ -1,0 +1,84 @@
+import discord
+from discord.ext.commands import Bot
+from discord.ext import commands
+import asyncio
+import time
+import random
+import os
+from discord import Game
+
+Client = discord.client
+client = commands.Bot(command_prefix = '.')
+Clientdiscord = discord.Client()
+client.remove_command('help')
+
+@client.event
+async def on_ready():
+    await client.change_presence(game=discord.Game(name="for .help", type=3))
+    print("Running...")
+
+@client.event
+async def on_member_join(member):
+    await client.send_message(member, 'Hello And Welcome To The Officilal SG Discord Server. We Hope You Have A Great Experience With Us. If You Have Any Issues Dont Hessitate To Ask Around In The Discord. Please Make Sure To Read All Of Are Rules And Follow Them. ENJOY!!!')
+    print('Sent message to ' + member.name)
+
+@client.event
+async def on_message(message):
+    if message.content == '.help':
+        await client.send_message(message.channel,'Sorry There Is No Help Currently As We Are Working On Adding More Commands And Finishing Up The Bot please Bare With Us :)')
+    if message.content == 'hi':
+        await client.send_message(message.channel,'Howdy Partner')
+    if message.content == 'hello':
+        await client.send_message(message.channel,'Howdy Partner')
+    if message.content == 'Hi':
+        await client.send_message(message.channel,'Howdy Partner')
+    if message.content == 'Hello':
+        await client.send_message(message.channel,'Howdy Partner')
+    if message.content == '.verify':
+        await client.send_message(message.channel,'To Verify Simply Navigate To The #verification Channel In The Discord And Follow The Instructions Yunite (BOT) Tells You :)')
+    if message.content == '.ping':
+        await client.send_message(message.channel,'Pong')
+    if message.content == '.default':
+        em = discord.Embed(description='Dedault Dance Boiiiiii')
+        em.set_image(url='https://cdn.discordapp.com/attachments/488600981765095438/513075944685174784/1708785.gif')
+        await client.send_message(message.channel, embed=em)
+    if message.content == '!SAMBTW':
+        em = discord.Embed(description='@everyone **NEW CUSTOM MATCHMAKING KEY!!!**')
+        em.set_image(url='https://cdn.discordapp.com/attachments/456507746108440587/563036168527151104/image0.jpg')
+        await client.send_message(message.channel, embed=em)
+    if message.content == '!ECLIPSEHD':
+        em = discord.Embed(description='@everyone **NEW CUSTOM MATCHMAKING KEY!!!**')
+        em.set_image(url='https://cdn.discordapp.com/attachments/456507746108440587/563036167675838497/image1.jpg')
+        await client.send_message(message.channel, embed=em)   
+    if message.content == '!TTVIDEOS':
+        em = discord.Embed(description='@everyone **NEW CUSTOM MATCHMAKING KEY!!!**')
+        em.set_image(url='https://cdn.discordapp.com/attachments/456507746108440587/563037454202961932/image0.jpg')
+        await client.send_message(message.channel, embed=em)   
+
+
+@client.command(pass_context=True)
+async def help(ctx):
+    author = ctx.message.author
+
+    embed = discord.Embed(
+        colour = discord.Colour.orange()
+        )
+
+    embed.set_author(name='Help')
+    embed.add_field(name='.ping', value= 'Returns Pong!', inline=false)
+
+    await client.send_message(author, embed=embed)
+
+
+@client.command(pass_context=True)
+async def clear(ctx, amount=100):
+    channel = ctx.message.channel
+    messages = [ ]
+    async for message in client.logs_from(channel, limit=int(amount) + 1):
+        messages.append(message)
+    await client.delete_messages(messages)
+    await client.say('Messages Have Been Cleared!')
+
+keep_alive()
+TOKEN = os.environ.get("DISCORD_BOT_SECRET")
+client.run(TOKEN)
